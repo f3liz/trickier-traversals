@@ -61,7 +61,23 @@ public class Traversals {
    * @return a list of node values in a top-to-bottom order, or an empty list if the tree is null
    */
   public static <T> List<T> collectLevelOrderValues(TreeNode<T> node) {
-    return null;
+    List<T> newList = new ArrayList<>();
+    if(node == null) return newList;
+
+    Queue<TreeNode> queue = new LinkedList<>();
+
+    queue.add(node);
+
+    while(!queue.isEmpty()) {
+      TreeNode<T> currentNode = queue.poll();
+
+      if(currentNode == null) continue;
+
+      newList.add(currentNode.value);
+      if(currentNode.left != null) queue.add(currentNode.left);
+      if(currentNode.right != null) queue.add(currentNode.right);
+    }
+    return newList;
   }
 
   /**
@@ -72,7 +88,24 @@ public class Traversals {
    * @return the number of unique values in the tree, or 0 if the tree is null
    */
   public static int countDistinctValues(TreeNode<Integer> node) {
-    return 0;
+    if(node == null) return 0;
+    
+    Set<Integer> unique = new HashSet<>();
+    Queue<TreeNode<Integer>> queue = new LinkedList<>();
+    queue.add(node);
+
+    while(!queue.isEmpty()) {
+      TreeNode<Integer> currentNode = queue.poll();
+
+      if(currentNode == null) continue;
+
+      unique.add(currentNode.value);
+
+      if(currentNode.left != null) queue.add(currentNode.left);
+      if(currentNode.right != null) queue.add(currentNode.right);
+    }
+
+    return unique.size();
   }
 
   /**
