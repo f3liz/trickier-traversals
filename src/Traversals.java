@@ -117,8 +117,21 @@ public class Traversals {
    * @return true if there exists a strictly increasing root-to-leaf path, false otherwise
    */
   public static boolean hasStrictlyIncreasingPath(TreeNode<Integer> node) {
-    return false;
+    if(node == null) return false;
+    return hasStrictlyIncreasingPath(node, Integer.MIN_VALUE);
   }
+
+  private static boolean hasStrictlyIncreasingPath(TreeNode<Integer> node, int previousValue) {
+    if(node == null) return false;
+
+    if(node.value < previousValue) return false;
+
+    if(node.left == null && node.right == null) return true;
+
+    return hasStrictlyIncreasingPath(node.left, node.value) || hasStrictlyIncreasingPath(node.right, node.value);
+
+  }
+
 
   // OPTIONAL CHALLENGE
   /**
@@ -132,7 +145,11 @@ public class Traversals {
    * @return true if the trees have the same shape, false otherwise
    */
   public static <T> boolean haveSameShape(TreeNode<T> nodeA, TreeNode<T> nodeB) {
-    return false;
+    if(nodeA == null && nodeB == null) return true;
+
+    if(nodeA == null || nodeB == null) return false;
+
+    return haveSameShape(nodeA.left, nodeB.left) && haveSameShape(nodeA.right, nodeB.right);
   }
 
 
